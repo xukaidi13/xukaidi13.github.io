@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function changeImage()
+{
+	var d=new Date();
+	time1=d.getTime();
+	state="waitForKey";
+	num=Math.floor(Math.random()*4)+1;
+	displayAfigure(num);
+	return num;
+}
+</script>
+<script>
+function clickStart()
+{
+	var aaa=document.getElementById("startButton");
+	aaa.parentNode.removeChild(aaa);
+	displayAfigure(0);
+	stateStart();
+}
+</script>
+<script>
+function displayAfigure(num)
+{
+	var fignum=num+".jpg";
+	var im=document.getElementById("image");
+	im.src=fignum;
+}
+</script>
+<style type="text/css">
+	
+	h1
+	{
+		position:absolute;
+		left:45%;
+	}
+	input
+	{
+		position:absolute;
+		left:47%;
+		top:6em;
+	}
+	.center
+	{
+		margin-left:auto;
+		margin-right:auto;
+		width:30%;
+	}
+	table
+	{
+		border:1px solid black;
+	}
+	#image
+	{
+		position:relative;
+		left:21%;
+		top:3.5em;
+	}
+</style>
+</head>
+<body onkeydown="waitState(event)">
+    <h1 class="center">A TEST</h1>
+    <form>
+		<input type="button" value="start" id="startButton" onClick="clickStart()">
+	</form>
+	<img id="image" src="">
+	<p id="test1">1</p>
+	<ul class="center">
+		<li>TRUE:<span id="true">0</span></li>
+		<li>FALSE:<span id="false">0</span></li>
+	</ul>
+	<table class="center">
+		<tr>
+			<td>time</td><td id="time"> </td>
+		</tr>
+	</table>
+<script>
+var num=0;
+var ek=0;var TR=0,FA=0;var state="start";
+var time1=0,time2=0,t;
+function stateStart()
+{
+	displayAfigure(0);
+	
+	setTimeout("changeImage()",1500);
+	
+	return 0;
+}
+function waitState(event)
+{
+	ek=event.keyCode;
+	if(state=="waitForKey")
+	{
+		if(ek==70||ek==74)
+		{
+			var d=new Date();
+			time2=d.getTime();
+			t=time2-time1;
+			if((ek==70&&num==1)||(ek==70&&num==3)||(ek==74&&num==2)||(ek==74&&num==4))
+			{
+				TR++;
+			}
+			else
+			FA++;
+			
+			state="stateStart";
+			document.getElementById("true").innerHTML=TR;
+			document.getElementById("false").innerHTML=FA;
+			document.getElementById("time").innerHTML=t;
+			
+			stateStart();
+		}
+	}
+	return 0;
+}
+</script>
+</body>
+</html>
